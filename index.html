@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>深入理解es6</title>
+</head>
+<body>
+<script type="text/javascript">
+	function getValue(condition) {
+		if (condition) {
+			let value  = 'blue';
+			return value	
+		} else {
+			return null
+		}
+	}
+	console.log(getValue(55))
+
+	// 同一作用域不能中不能用let重复定义已经存在的标识符
+	// 但如果当前作用域内嵌另一个作用域，便可在内嵌的作用域中用let声明同名变量
+	var count = 30
+	var condition = 30
+	if (condition) {
+		let count = 40
+		console.log(count)
+	} 
+
+
+	// const声明的是常量，其值一旦被设定后不可更改，因此每个通过const声明的常量必须进行初始化
+	const maxItems = 30
+	// const name //Uncaught SyntaxError: Missing initializer in const declaration
+
+	// 与let相似，在同一作用域用const声明已经存在的标识符会导致语法错误，无论该标识符是使用var（在全局或函数作用域中），还是let（在块级作用域中）声明的。eg：
+	var message = "hello"
+	let age = 25
+
+	// 这两条语句都会抛出错误
+	// const message = "goodbye" //Uncaught SyntaxError: Identifier 'message' has already been declared
+	// const age = 30 // Uncaught SyntaxError: Identifier 'age' has already been declared
+
+
+	// const 声明与let声明有一处很大的不同，即无论在严格模式还是在非严格模式下，都不可以为const定义的常量再赋值
+
+
+	// 用const声明对象
+	// const声明不允许修改绑定，但允许修改值，。这也就意着用const声明对象后，可以修改该对象的属性值
+
+	const person = {
+		name: 'nicholas'
+	}
+
+	// 可以修改对象属性的值
+	person.name = 'greg'
+
+	// 抛出语法错误
+	// person = {
+	// 	name:'geeg'
+	// }
+
+
+	var funcs = []
+	for (var i = 0; i < 10; i++) {
+		funcs.push(function() {
+			console.log(i)
+		})
+	}
+	funcs.forEach((func) => {
+	  func(); // 输出10次数字10
+	})
+
+
+	// 使用立即调用函数表达式（IIFE），以强制生成计数器变量的副本
+	var funcs = []
+	for (var i = 0; i < 10; i++) {
+		funcs.push((function(value) {
+			return function() {
+				console.log(value)
+			}
+		}(i)))
+	}
+	funcs.forEach((func) => {
+	  func(); // 依次输出0-9
+	})
+	// 在循环内部，IIFE表达式为接受的每一个变量i都创建了一个副本并存储为变量value。这个变量的值就是相应迭代创建的函数所使用的值，因此调用每个函数就会像从0-9循环一样得到期望的值，
+
+	var funcs = []
+	for (let i = 0; i < 10; i++) {
+		funcs.push(function() {
+			console.log(i)
+		})
+	}
+	funcs.forEach((func) => {
+	  func(); // 输出10次数字10
+	})
+
+
+	var funcs = []
+	object = {
+		a: true,
+		b: true,
+		c: true
+	}
+
+	for(let key in object) {
+		funcs.push(function() {
+			console.log(key)
+		})
+	}
+
+	funcs.forEach((func) => {
+	  func() //依次输出a, b, c
+	})
+
+	// 循环中的const声明
+	// 对于普通的for循环来说，可以在初始化变量时使用const，但是更改这个变量的值就会抛出错误，
+
+	// 全局块作用域绑定
+	// let 和 const 与 var 的另外一个区别是他们在全局作用域中的行为，当var被用于全局作用域时，他会创建一个新的全局变量作为全局对象（浏览器环境中的window对象）的属性，这意味着用var很可能会无意中覆盖一个已经存在的全局变量
+	
+</script>
+</body>
+</html>
